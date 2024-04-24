@@ -5,15 +5,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Perro implements Animal {
+public class Lobo implements Animal {
 
 	@Override
 	public String sonido() {
 		// TODO Auto-generated method stub
-		return ladrido.getSonidoAlto();
+		return aullido.getSonidoAlto();
 	}
-
+	
 	@Autowired
-	@Qualifier("ladridoAlto")
-	private SonidoAlto ladrido;
+	@Qualifier("aullidoAlto")
+	private SonidoAlto aullido;
 }
