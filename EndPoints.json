@@ -1,0 +1,714 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "API de Gestion de Usuarios y sus proyectos y Blogs",
+    "description": "API que gestiona todos las interacciones que hay entre los diferentes componenetes del sistema.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://api.projects.com"
+    }
+  ],
+  "paths": {
+    "/projects": {
+      "get": {
+        "summary": "Obtener todos los proyectos",
+        "description": "Devuelve una lista con todos los proyectos.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Lista de proyectos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Project"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo proyecto",
+        "description": "Crea un nuevo proyecto.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Éxito. Proyecto creado."
+          },
+          "400": {
+            "description": "Error de validación. Los datos proporcionados son invalidos."
+          }
+        }
+      }
+    },
+    "/projects/{projectId}": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "description": "ID del proyecto a consultar",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener detalles de un proyecto",
+        "description": "Devuelve los detalles de un proyecto específico.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Devuelve los detalles del proyecto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el proyecto."
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar un proyecto",
+        "description": "Actualiza los detalles de un proyecto existente.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Éxito. El proyecto ha sido actualizado."
+          },
+          "404": {
+            "description": "No se ha encontrado el proyecto."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar un proyecto",
+        "description": "Elimina un proyecto.",
+        "responses": {
+          "204": {
+            "description": "Éxito. El proyecto ha sido eliminado."
+          },
+          "404": {
+            "description": "No se ha encontrado el proyecto."
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/codes": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "description": "ID del proyecto",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener todos los códigos de un proyecto",
+        "description": "Devuelve una lista con todos los códigos asociados a un proyecto.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Lista de códigos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Code"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/details": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "description": "ID del proyecto",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener detalles de un proyecto",
+        "description": "Devuelve los detalles de un proyecto concreto.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Detalles del proyecto.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Detail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No se ha encontrado el proyecto."
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Obtener todos los usuarios",
+        "description": "Devuelve una lista con todos los usuarios.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Devuelve la lista de usuarios.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo usuario",
+        "description": "Crea un nuevo usuario.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Éxito. Usuario creado."
+          },
+          "400": {
+            "description": "Error de validación. La solicitud no es valida."
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "ID del usuario a consultar",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener detalles de un usuario",
+        "description": "Devuelve los detalles de un usuario específico.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Detalles del usuario.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario no encontrado."
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar un usuario",
+        "description": "Actualiza los detalles de un usuario existente.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Éxito. Usuario actualizado."
+          },
+          "404": {
+            "description": "Usuario no encontrado."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar un usuario",
+        "description": "Elimina un usuario.",
+        "responses": {
+          "204": {
+            "description": "Éxito. Usuario eliminado."
+          },
+          "404": {
+            "description": "Usuario no encontrado."
+          }
+        }
+      }
+    },
+    "/users/{userId}/blogs": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "description": "ID del usuario",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener todos los blogs de un usuario",
+        "description": "Devuelve una lista con todos los blogs asociados a un usuario.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Lista de blogs de un usuario.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Blog"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blogs": {
+      "get": {
+        "summary": "Obtener todos los blogs",
+        "description": "Devuelve una lista con todos los blogs.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Lista de blogs completa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Blog"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo blog",
+        "description": "Crea un nuevo blog.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Éxito. Blog creado."
+          },
+          "400": {
+            "description": "Error de validación. La solicitud no es valida."
+          }
+        }
+      }
+    },
+    "/blogs/{blogId}": {
+      "parameters": [
+        {
+          "name": "blogId",
+          "in": "path",
+          "description": "ID del blog a consultar",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener detalles de un blog",
+        "description": "Devuelve los detalles de un blog específico.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Detalles del blog.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Blog"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Blog no encontrado."
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar un blog",
+        "description": "Actualiza los detalles de un blog existente.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Éxito. Blog actualizado."
+          },
+          "404": {
+            "description": "Blog no encontrado."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar un blog",
+        "description": "Elimina un blog.",
+        "responses": {
+          "204": {
+            "description": "Éxito. Blog eliminado."
+          },
+          "404": {
+            "description": "Blog no encontrado."
+          }
+        }
+      }
+    },
+    "/blogs/{blogId}/articles": {
+      "parameters": [
+        {
+          "name": "blogId",
+          "in": "path",
+          "description": "ID del blog",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener todos los artículos de un blog",
+        "description": "Devuelve una lista con todos los artículos asociados a un blog.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Lista de artículos del blog.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles": {
+      "get": {
+        "summary": "Obtener todos los artículos",
+        "description": "Devuelve una lista con todos los artículos.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Lista de artículos completa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo artículo",
+        "description": "Crea un nuevo artículo.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Article"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Éxito. Articulo creado."
+          },
+          "400": {
+            "description": "Error de validación. La solicitud no es valida.."
+          }
+        }
+      }
+    },
+    "/articles/{articleId}": {
+      "parameters": [
+        {
+          "name": "articleId",
+          "in": "path",
+          "description": "ID del artículo a consultar",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Obtener detalles de un artículo",
+        "description": "Devuelve los detalles de un artículo específico.",
+        "responses": {
+          "200": {
+            "description": "Éxito. Detalles del artículo.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Articulo no encontrado."
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualizar un artículo",
+        "description": "Actualiza los detalles de un artículo existente.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Article"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Éxito. Artículo actualizado."
+          },
+          "404": {
+            "description": "Articulo no encontrado."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar un artículo",
+        "description": "Elimina un artículo.",
+        "responses": {
+          "204": {
+            "description": "Éxito. Artículo eliminado."
+          },
+          "404": {
+            "description": "Articulo no encontrado."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Project": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "open": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "description",
+          "language",
+          "open"
+        ]
+      },
+      "Code": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "package": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "package",
+          "file"
+        ]
+      },
+      "Detail": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "content": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "budget": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nick": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "label": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "Blog": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "abstract": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "Phone": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
